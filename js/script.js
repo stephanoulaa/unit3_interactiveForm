@@ -101,15 +101,15 @@ function addActivities(activityChecked, activityName, dataCostVal, activityDate)
         totalCost += parseInt(dataCostVal.textContent);
         displayTotalCost(totalCost);
         // make sure we are not including first activity in the function
-        if (activityName.textContent !== "all") {
+        if (activityName.textContent !== 'all') {
           avoidOverlappingDates(activityDate, activityName);
         }
       } else {
         // again need to ignore first activity
-        if (activityName.textContent !== "all") {
+        if (activityName.textContent !== 'all') {
           for (let i = 1; i < listOfActivities.length; i++) {
-            if (activityDate.textContent === listOfActivities[i].attributes.getNamedItem("data-day-and-time").textContent) {
-              listOfActivities[i].removeAttribute("disabled");
+            if (activityDate.textContent === listOfActivities[i].attributes.getNamedItem('data-day-and-time').textContent) {
+              listOfActivities[i].removeAttribute('disabled');
             }
           } //end of for loop
         }
@@ -134,9 +134,9 @@ function displayTotalCost() {
 function avoidOverlappingDates(activityDate, activityName) {
     // loop thru all dates (start with 1 because first activity is on all days)
   for (let i = 1; i < listOfActivities.length; i++) {
-    if (activityName !== listOfActivities[i].attributes.getNamedItem("name")) {
-      if (activityDate.textContent === listOfActivities[i].attributes.getNamedItem("data-day-and-time").textContent) {
-        listOfActivities[i].setAttribute("disabled", "");
+    if (activityName !== listOfActivities[i].attributes.getNamedItem('name')) {
+      if (activityDate.textContent === listOfActivities[i].attributes.getNamedItem('data-day-and-time').textContent) {
+        listOfActivities[i].setAttribute('disabled', '');
       }
     }
   } // end of for loop
