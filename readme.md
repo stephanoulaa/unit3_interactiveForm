@@ -1,0 +1,3 @@
+- add readme stuff
+- adjust html as needed
+- add in reset.css and normalize.css?
