@@ -385,9 +385,17 @@ form.addEventListener('submit', (e) => {
     isValidName();
     isValidEmail();
     activitiesValidation();
-    creditCardValidation();
-    zipCodeValidation();
-    cvvValidation();
+    
+    // ONLY validate cc-num, zip code, cvv IF credit card payment method is selected 
+    if (creditCard.hidden = false) {
+        creditCardValidation();
+        zipCodeValidation();
+        cvvValidation();
+    }
+
+//    creditCardValidation();
+//    zipCodeValidation();
+//    cvvValidation();
     
     // if there are no more error messages, refresh the page
     // this is because we can't actually submit the form
