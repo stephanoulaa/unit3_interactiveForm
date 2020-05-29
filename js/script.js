@@ -175,7 +175,75 @@ const isValidName = () => {
     const errorMsgName = 'Please enter a valid name.';
     const msgElementName = nameInput.previousElementSibling.textContent;
     const nameTitle = 'Name:';
-    theValidator(nameTitle, nameRegex, errorMsgName, msgElementName, nameInput, nameLabel);
+    // theValidator(nameTitle, nameRegex, errorMsgName, msgElementName, nameInput, nameLabel);
+    
+    const altError = /^[A-Za-z0-9]+$/;
+    const altErrorMessage = "Sorry, this field cannot contain a number (unless your name is X Æ A-12)."
+    
+    // if input matches with regex, add the purple 'valid' border
+    if (nameRegex.test(nameInput.value)) {
+        nameInput.style.border = '2px solid purple';
+        if (msgElementName === errorMsgName) {
+          // also delete error message if it exists
+          nameInput.previousElementSibling.remove();
+        }
+        if (msgElementName === altErrorMessage) {
+          // also delete NUMBER error message if it exists
+          nameInput.previousElementSibling.remove();
+        }
+    } 
+    
+    // tests if name input has a number
+    else if (altError.test(nameInput.value)) {
+        nameInput.style.border = '2px solid red';
+            
+        if (msgElementName === nameTitle) {
+          const nameLabel = document.createElement('label');
+          nameLabel.style.color = 'red';
+          nameLabel.textContent = altErrorMessage;
+          // make sure this label is inserted above the input but below the 'NAME' label
+          nameInput.parentNode.insertBefore(nameLabel, nameInput);
+        }
+            
+        // push the error message to the error messages array
+        // this will keep track of erors on page and be used later
+        errorMsgs.push(msgElementName);
+    } 
+    
+    // tests if name input has other things that would make it invalid (such as a special character)
+     else if (nameRegex.test(nameInput.value)) {
+        nameInput.style.border = '2px solid red';
+            
+        if (msgElementName === nameTitle) {
+          const nameLabel = document.createElement('label');
+          nameLabel.style.color = 'red';
+          nameLabel.textContent = errorMsgName;
+          // make sure this label is inserted above the input but below the 'NAME' label
+          nameInput.parentNode.insertBefore(nameLabel, nameInput);
+        }
+            
+        // push the error message to the error messages array
+        // this will keep track of erors on page and be used later
+        errorMsgs.push(msgElementName);
+    }
+    
+    else {
+        // when NAME is not valid, add red border and red error message label
+        nameInput.style.border = '2px solid red';
+            
+        if (msgElementName === nameTitle) {
+          const nameLabel = document.createElement('label');
+          nameLabel.style.color = 'red';
+          nameLabel.textContent = errorMsgName;
+          // make sure this label is inserted above the input but below the 'NAME' label
+          nameInput.parentNode.insertBefore(nameLabel, nameInput);
+        }
+            
+        // push the error message to the error messages array
+        // this will keep track of erors on page and be used later
+        errorMsgs.push(msgElementName);
+    }
+    
 }
 
 
