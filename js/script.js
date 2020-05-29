@@ -113,6 +113,7 @@ function addActivities(activityChecked, activityName, dataCostVal, activityDate)
             }
           } //end of for loop
         }
+        //suptract from total cost if activity is unchecked
         totalCost -= parseInt(dataCostVal.textContent);
         displayTotalCost(totalCost);
         if (totalCost === 0) {
@@ -157,30 +158,61 @@ const bitcoin = document.getElementById('bitcoin');
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
 
-// define function to choose payment option, and hide the others
-function choosePayment(creditCard, paypal, bitcoin) {
-    // stuff
-}
+// remove this choice so that the user can't use it
+const invalidPaymentChoice = paymentMenu.firstElementChild;
+invalidPaymentChoice.remove();
+//console.log(invalidPaymentChoice);
 
 // add event listener so that only selected payment method is shown
 paymentMenu.addEventListener('change', () => {
-    if (paymentMenu.value == 'credit card' ) {
+    if (paymentMenu.value == 'credit card') {
         console.log('credit card selected!');
         creditCard.style.display = '';
         paypal.style.display = 'none';
         bitcoin.style.display = 'none';
-    } if (paymentMenu.value == 'paypal' ) {
+    } if (paymentMenu.value == 'paypal') {
         console.log('paypal selected!');
         paypal.style.display = '';
         creditCard.style.display = 'none';
         bitcoin.style.display = 'none';
-    } if (paymentMenu.value == 'bitcoin' ) {
+    } if (paymentMenu.value == 'bitcoin') {
         console.log('bitcoin selected!');
         bitcoin.style.display = '';
         paypal.style.display = 'none';
         creditCard.style.display = 'none';
     }
-})
+});
+
+
+// FORM VALIDATION SECTION:
+
+// validate name field:
+
+// validate email field:
+const emailInput = document.getElementById('mail');
+const emailLabel = document.createElement('label');
+
+function isValidEmail(email) {
+    if (/^[^@]+@[^@.]+\.[a-z]+$/i.test(email)) {
+        return true;
+    } else {
+//        emailInput.style.border = '2px solid red';
+//        return false;
+    }
+}
+
+
+// user must select at least ONE activity:
+
+// credit card number needs 13-16 digits: (ONLY VALIDATE IF SELECTED)
+
+// zip code needs 5 digits:
+
+// cvv should be 3 digits:
+
+emailInput.addEventListener('input', isValidEmail);
+
+
 
 
 
