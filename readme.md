@@ -1,4 +1,2 @@
 - add readme stuff
-- adjust html as needed
-- add in reset.css and normalize.css?
-- add styling to css
+- add more styling to css

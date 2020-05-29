@@ -1,10 +1,6 @@
 // place 'focus' state on name field
 document.getElementById('name').focus();
 
-
-// define array to hold all error messages to be used later
-let errorMsgs = [];
-
 // JOB ROLE SECTION:
 
 // define DOM Elements for job role, and hide "other" input until needed
@@ -21,6 +17,7 @@ selectTitle.addEventListener('change', (e) => {
   }
 });
 
+
 // T-SHIRT SECTION:
 
 // define design menu section
@@ -28,10 +25,6 @@ const designSection = document.getElementById('design');
 const colorSection = document.getElementById('colors-js-puns');
 const colorOptions = document.getElementById('color').children;
 colorSection.style.display = 'none';
-
-//const choosePunOption = document.createElement("option");
-//choosePunOption.text = "Choose a JS Puns T-Shirt";
-//colorSection.appendChild(choosePunOption);
 
 // add event listener for when user chooses a design, it hides the other 3 that aren't relevant
 designSection.addEventListener('change', (e) => {
@@ -49,14 +42,10 @@ designSection.addEventListener('change', (e) => {
             colorOptions[4].style.display = '';
             colorOptions[5].style.display = '';
             colorSection.style.display = '';
-        } 
-//        else if (e.target === designSection.firstElementChild) {
-//            const selectThemeLabel = document.querySelector("label[for='design']");
-//            colorSection.style.display = '';
-//            selectThemeLabel.innerHTML = "Please Select A T-Shirt Theme:"
-//        }
+        }
     }
 });
+
 
 // REGISTER FOR ACTIVITIES SECTION:
 
@@ -67,18 +56,6 @@ const totalCostLabel = document.createElement('label');
 // define activities section and locate all activities inputs
 const activities = document.querySelector('.activities');
 const listOfActivities = activities.querySelectorAll('input');
-//listOfActivities[i].attributes.getNamedItem('data-cost').value;
-
-//let chosenActivities = [];
-
-//// loop through all activities by PRICE
-//for (var i=0; i<listOfActivities.length; i+=1) {
-//    if (listOfActivities.checked) {
-////        chosenActivities.push(listOfActivities[i].attributes.getNamedItem('data-cost').value);
-////        console.log(chosenActivities);
-//        console.log("checked!");
-//    }
-//}
 
 // loop through all activity inputs and record their name, day/time, checked status and cost
 for (var i=0; i<listOfActivities.length; i+=1) {
@@ -145,11 +122,6 @@ function avoidOverlappingDates(activityDate, activityName) {
   } // end of for loop
 };
 
-//console.log(listOfActivities.attributes.getNamedItem('data-cost').value);
-//const dataCostAttribute = listOfActivities.attributes.getAttribute('data-cost');
-//console.log(dataCostAttribute);
-
-
 // PAYMENT INFO SECTION:
 
 // define relevant payment variables
@@ -161,25 +133,27 @@ const bitcoin = document.getElementById('bitcoin');
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
 
+
 // remove this choice so that the user can't use it
 const invalidPaymentChoice = paymentMenu.firstElementChild;
 invalidPaymentChoice.remove();
 //console.log(invalidPaymentChoice);
 
+
 // add event listener so that only selected payment method is shown
 paymentMenu.addEventListener('change', () => {
     if (paymentMenu.value == 'credit card') {
-        console.log('credit card selected!');
+        //console.log('credit card selected!');
         creditCard.style.display = '';
         paypal.style.display = 'none';
         bitcoin.style.display = 'none';
     } if (paymentMenu.value == 'paypal') {
-        console.log('paypal selected!');
+        //console.log('paypal selected!');
         paypal.style.display = '';
         creditCard.style.display = 'none';
         bitcoin.style.display = 'none';
     } if (paymentMenu.value == 'bitcoin') {
-        console.log('bitcoin selected!');
+        //console.log('bitcoin selected!');
         bitcoin.style.display = '';
         paypal.style.display = 'none';
         creditCard.style.display = 'none';
@@ -187,79 +161,37 @@ paymentMenu.addEventListener('change', () => {
 });
 
 
-// FORM VALIDATION SECTION:
+// NAME VALIDATOR:
 
-// validate name field:
+// first, define array to hold all error messages to be used later
+let errorMsgs = [];
+
 const nameInput = document.getElementById('name');
 const nameLabel = document.createElement('label');
 
 const isValidName = () => {
-    
     // define regex, error message and element where error msg will go (above input)
     const nameRegex = /^[A-Za-z]+$/;
     const errorMsgName = 'Please enter a valid name.';
     const msgElementName = nameInput.previousElementSibling.textContent;
-
-    // if input matches with regex, add the purple 'valid' border
-    if (nameRegex.test(nameInput.value)) {
-        nameInput.style.border = '2px solid purple';
-        if (msgElementName === errorMsgName) {
-          // also delete error message/red 'error' border if it exists
-          nameInput.previousElementSibling.remove();
-        }
-    } else {
-        // when name is not valid, add red border and red error message label
-        nameInput.style.border = '2px solid red';
-        if (msgElementName === 'Name:') {
-          const errorLabelName = document.createElement('label');
-          errorLabelName.style.color = 'red';
-          errorLabelName.textContent = errorMsgName;
-          // make sure this label is inserted above the input but below the 'Name' label
-          nameInput.parentNode.insertBefore(errorLabelName, nameInput);
-        }
-        // push the error message to the error messages array
-        // this will keep track of erors on page and be used later
-        errorMsgs.push(msgElementName);
-      }
+    const nameTitle = 'Name:';
+    theValidator(nameTitle, nameRegex, errorMsgName, msgElementName, nameInput, nameLabel);
 }
 
 
-// validate email field (same as name field validation):
+// EMAIL VALIDATOR:
 const emailInput = document.getElementById('mail');
 const emailLabel = document.createElement('label');
 
 const isValidEmail = () => {
-    
-    // define regex, error message and element where error msg will go (above input)
     const emailRegex = /^[^@]+@[^@.]+\.[a-z]+$/i;
     const errorMsg = 'Please enter a valid email.';
     const msgElement = emailInput.previousElementSibling.textContent;
-
-    // if input matches with regex, add the purple 'valid' border
-    if (emailRegex.test(emailInput.value)) {
-        emailInput.style.border = '2px solid purple';
-        if (msgElement === errorMsg) {
-          // also delete error message/red 'error' border if it exists
-          emailInput.previousElementSibling.remove();
-        }
-    } else {
-        // when email is not valid, add red border and red error message label
-        emailInput.style.border = '2px solid red';
-        if (msgElement === 'Email:') {
-          const errorLabel = document.createElement('label');
-          errorLabel.style.color = 'red';
-          errorLabel.textContent = errorMsg;
-          // make sure this label is inserted above the input but below the 'Email' label
-          emailInput.parentNode.insertBefore(errorLabel, emailInput);
-        }
-        // push the error message to the error messages array
-        // this will keep track of erors on page and be used later
-        errorMsgs.push(msgElement);
-      }
+    const emailTitle = 'Email:';
+    theValidator(emailTitle, emailRegex, errorMsg, msgElement, emailInput, emailLabel);
 }
 
-// user must select at least ONE activity:
-
+// ACTIVITIES VALIDATOR:
 const activitiesValidation = () => {
     // to figure this out, use the same array of activities to check all of them together
     let checkedEvents = [];
@@ -268,7 +200,7 @@ const activitiesValidation = () => {
     for (var i=0; i<listOfActivities.length; i+=1) {
         if (listOfActivities[i].checked) {
             checkedEvents.push(listOfActivities[i].checked);
-            console.log(checkedEvents);
+            //console.log(checkedEvents);
         }
     }
     
@@ -286,7 +218,8 @@ const activitiesValidation = () => {
     }
 }
 
-// credit card number needs 13-16 digits: (ONLY VALIDATE IF SELECTED)
+
+// CREDIT CARD NUM VALIDATOR:
 const cardInput = document.getElementById('cc-num');
 const cardLabel = document.createElement('label');
 
@@ -294,31 +227,12 @@ const creditCardValidation = () => {
     const cardRegex = /^\d{13,16}$/;
     const cardError = 'Please Enter a Valid Credit Card Number.';
     const newCardEl = cardInput.previousElementSibling.textContent;
-
-    // if input matches with regex, add the purple 'valid' border
-    if (cardRegex.test(cardInput.value)) {
-        cardInput.style.border = '2px solid purple';
-        if (newCardEl === cardError) {
-          // also delete error message/red 'error' border if it exists
-          cardInput.previousElementSibling.remove();
-        }
-    } else {
-        // when card num is not valid, add red border and red error message label
-        cardInput.style.border = '2px solid red';
-        if (newCardEl === 'Card Number:') {
-          const cardLabel = document.createElement('label');
-          cardLabel.style.color = 'red';
-          cardLabel.textContent = cardError;
-          // make sure this label is inserted above the input but below the 'Card Number' label
-          cardInput.parentNode.insertBefore(cardLabel, cardInput);
-        }
-        // push the error message to the error messages array
-        // this will keep track of erors on page and be used later
-        errorMsgs.push(newCardEl);
-      }
+    const cardTitle = 'Card Number:';
+    theValidator(cardTitle, cardRegex, cardError, newCardEl, cardInput, cardLabel);
     
 }
-// zip code needs 5 digits:
+
+// ZIP CODE VALIDATOR:
 const zipInput = document.getElementById('zip');
 const zipLabel = document.createElement('label');
 
@@ -326,33 +240,11 @@ const zipCodeValidation = () => {
     const zipRegex = /^\d{5}$/;
     const zipError = 'Please Enter a Valid Zip Code.';
     const newZipEl = zipInput.previousElementSibling.textContent;
-
-    // if input matches with regex, add the purple 'valid' border
-    if (zipRegex.test(zipInput.value)) {
-        zipInput.style.border = '2px solid purple';
-        if (newZipEl === zipError) {
-          // also delete error message/red 'error' border if it exists
-          zipInput.previousElementSibling.remove();
-        }
-    } else {
-        // when zip code is not valid, add red border and red error message label
-        zipInput.style.border = '2px solid red';
-        if (newZipEl === 'Zip Code:') {
-          const zipLabel = document.createElement('label');
-          zipLabel.style.color = 'red';
-          zipLabel.textContent = zipError;
-          // make sure this label is inserted above the input but below the 'Zip Code' label
-          zipInput.parentNode.insertBefore(zipLabel, zipInput);
-        }
-        // push the error message to the error messages array
-        // this will keep track of erors on page and be used later
-        errorMsgs.push(newZipEl);
-      }
-    
-    
+    const zipTitle = 'Zip Code:';
+    theValidator(zipTitle, zipRegex, zipError, newZipEl, zipInput, zipLabel);
 }
 
-// cvv should be 3 digits:
+// CVV NUM VALIDATOR:
 const cvvInput = document.getElementById('cvv');
 const cvvLabel = document.createElement('label');
 
@@ -360,33 +252,41 @@ const cvvValidation = () => {
     const cvvRegex = /^\d{3}$/;
     const cvvError = 'Please Enter a Valid CVV Number.';
     const newCvvEl = cvvInput.previousElementSibling.textContent;
-
-    // if input matches with regex, add the purple 'valid' border
-    if (cvvRegex.test(cvvInput.value)) {
-        cvvInput.style.border = '2px solid purple';
-        if (newCvvEl === cvvError) {
-          // also delete error message/red 'error' border if it exists
-          cvvInput.previousElementSibling.remove();
-        }
-    } else {
-        // when cvv num is not valid, add red border and red error message label
-        cvvInput.style.border = '2px solid red';
-        if (newCvvEl === 'CVV:') {
-          const cvvLabel = document.createElement('label');
-          cvvLabel.style.color = 'red';
-          cvvLabel.textContent = cvvError;
-          // make sure this label is inserted above the input but below the 'CVV' label
-          cvvInput.parentNode.insertBefore(cvvLabel, cvvInput);
-        }
-        // push the error message to the error messages array
-        // this will keep track of erors on page and be used later
-        errorMsgs.push(newCvvEl);
-      }
-    
-    
+    const cvvTitle = 'CVV:';
+    theValidator(cvvTitle, cvvRegex, cvvError, newCvvEl, cvvInput, cvvLabel);
 }
 
 
+// Combine name, email, card num, zip code, and cvv to all use this 1 function (since they are very similar to each other)
+const theValidator = (thingTitle, thingRegex, thingError, newThingEl, thingInput, thingLabel) => {
+    thingRegex;
+    thingError;
+    newThingEl = thingInput.previousElementSibling.textContent;
+    
+    // if input matches with regex, add the purple 'valid' border
+    if (thingRegex.test(thingInput.value)) {
+        thingInput.style.border = '2px solid purple';
+        if (newThingEl === thingError) {
+          // also delete error message/red 'error' border if it exists
+          thingInput.previousElementSibling.remove();
+        }
+    } else {
+        // when THING is not valid, add red border and red error message label
+        thingInput.style.border = '2px solid red';
+            
+            if (newThingEl === thingTitle) {
+              const thingLabel = document.createElement('label');
+              thingLabel.style.color = 'red';
+              thingLabel.textContent = thingError;
+              // make sure this label is inserted above the input but below the 'THING' label
+              thingInput.parentNode.insertBefore(thingLabel, thingInput);
+            }
+            
+        // push the error message to the error messages array
+        // this will keep track of erors on page and be used later
+        errorMsgs.push(newThingEl);
+    }
+}
 
 // Check ALL validations when user submits form
 nameInput.addEventListener('input', isValidName);
@@ -398,9 +298,10 @@ for (var i=0; i<listOfActivities.length; i+=1) {
 }
 
 cardInput.addEventListener('input', creditCardValidation);
-zipInput.addEventListener('input', zipCodeValidation);
-cvvInput.addEventListener('input', cvvValidation);
 
+zipInput.addEventListener('input', zipCodeValidation);
+
+cvvInput.addEventListener('input', cvvValidation);
 
 
 /**
@@ -427,19 +328,3 @@ form.addEventListener('submit', (e) => {
         return false;
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
