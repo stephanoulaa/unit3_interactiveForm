@@ -1,2 +1,5 @@
 - add readme stuff
 - add more styling to css
+- delete function.js when done
+- fix name validator???
+- tshirt option bug?
