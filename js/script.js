@@ -122,7 +122,6 @@ function addActivities(activityChecked, activityName, dataCostVal, activityDate)
 }
 
 
-
 // use label element we created to dislay total cost, by appending below activities section
 function displayTotalCost() {
     totalCostLabel.textContent = 'Total Cost: $' + totalCost;
@@ -135,7 +134,7 @@ function avoidOverlappingDates(activityDate, activityName) {
     // loop thru all dates (start with 1 because first activity is on all days)
   for (let i = 1; i < listOfActivities.length; i++) {
     if (activityName !== listOfActivities[i].attributes.getNamedItem('name')) {
-      if (activityDate.textContent === listOfActivities[i].attributes.getNamedItem('data-day-and-time').textContent) {
+      if (activityDate.textContent ===listOfActivities[i].attributes.getNamedItem('data-day-and-time').textContent) {
         listOfActivities[i].setAttribute('disabled', '');
       }
     }
@@ -145,6 +144,43 @@ function avoidOverlappingDates(activityDate, activityName) {
 //console.log(listOfActivities.attributes.getNamedItem('data-cost').value);
 //const dataCostAttribute = listOfActivities.attributes.getAttribute('data-cost');
 //console.log(dataCostAttribute);
+
+
+// PAYMENT INFO SECTION:
+
+// define relevant payment variables
+const paymentMenu = document.getElementById('payment');
+const creditCard = document.getElementById('credit-card');
+const paypal = document.getElementById('paypal');
+const bitcoin = document.getElementById('bitcoin');
+// credit card option is shown by default so others are initially hidden
+paypal.style.display = 'none';
+bitcoin.style.display = 'none';
+
+// define function to choose payment option, and hide the others
+function choosePayment(creditCard, paypal, bitcoin) {
+    // stuff
+}
+
+// add event listener so that only selected payment method is shown
+paymentMenu.addEventListener('change', () => {
+    if (paymentMenu.value == 'credit card' ) {
+        console.log('credit card selected!');
+        creditCard.style.display = '';
+        paypal.style.display = 'none';
+        bitcoin.style.display = 'none';
+    } if (paymentMenu.value == 'paypal' ) {
+        console.log('paypal selected!');
+        paypal.style.display = '';
+        creditCard.style.display = 'none';
+        bitcoin.style.display = 'none';
+    } if (paymentMenu.value == 'bitcoin' ) {
+        console.log('bitcoin selected!');
+        bitcoin.style.display = '';
+        paypal.style.display = 'none';
+        creditCard.style.display = 'none';
+    }
+})
 
 
 
