@@ -24,26 +24,40 @@ selectTitle.addEventListener('change', (e) => {
 const designSection = document.getElementById('design');
 const colorSection = document.getElementById('colors-js-puns');
 const colorOptions = document.getElementById('color').children;
-colorSection.style.display = 'none';
+//colorSection.style.display = 'none';
+colorSection.hidden = true;
 
 // add event listener for when user chooses a design, it hides the other 3 that aren't relevant
 designSection.addEventListener('change', (e) => {
     for (var i=0; i<colorOptions.length; i+=1) {
-        colorOptions[i].style.display = 'none';
+         
+        // js puns conditional
         if (e.target.value === 'js puns') {
-            // show first three colors
-            colorSection.style.display = '';
-            colorOptions[0].style.display = '';
-            colorOptions[1].style.display = '';
-            colorOptions[2].style.display = '';
-        } else if (e.target.value === 'heart js') {
-            // show last three colors
-            colorOptions[3].style.display = '';
-            colorOptions[4].style.display = '';
-            colorOptions[5].style.display = '';
-            colorSection.style.display = '';
-        }
-    }
+            if (colorOptions[i].textContent.includes('JS Puns')) {
+                colorOptions[i].style.display = '';
+            }  else {
+                colorOptions[i].style.display = 'none';
+            }
+            // included below line in this if/else statement to fix bug
+            // the bug would show wrong type of shirt as first option in select menu
+            colorOptions[0].selected = true;
+            colorSection.hidden = false;
+         } 
+        
+        // i heart js conditional
+        else if (e.target.value === 'heart js') {
+            if (colorOptions[i].textContent.includes('JS shirt')) {
+                colorOptions[i].style.display = '';
+            }  else {
+                colorOptions[i].style.display = 'none';
+            }
+            colorOptions[3].selected = true;
+            colorSection.hidden = false;
+         } else {
+             colorSection.hidden = true;
+         }
+          
+    } // end of for loop
 });
 
 
@@ -387,7 +401,7 @@ form.addEventListener('submit', (e) => {
     activitiesValidation();
     
     // ONLY validate cc-num, zip code, cvv IF credit card payment method is selected 
-    if (creditCard.hidden = false) {
+    if (!creditCard.attributes.hidden) {
         creditCardValidation();
         zipCodeValidation();
         cvvValidation();
