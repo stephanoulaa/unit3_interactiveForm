@@ -144,8 +144,8 @@ const creditCard = document.getElementById('credit-card');
 const paypal = document.getElementById('paypal');
 const bitcoin = document.getElementById('bitcoin');
 // credit card option is shown by default so others are initially hidden
-paypal.style.display = 'none';
-bitcoin.style.display = 'none';
+paypal.hidden = true;
+bitcoin.hidden = true;
 
 
 // remove this choice so that the user can't use it
@@ -157,20 +157,20 @@ invalidPaymentChoice.remove();
 // add event listener so that only selected payment method is shown
 paymentMenu.addEventListener('change', () => {
     if (paymentMenu.value == 'credit card') {
-        //console.log('credit card selected!');
-        creditCard.style.display = '';
-        paypal.style.display = 'none';
-        bitcoin.style.display = 'none';
+        console.log('credit card selected!');
+        creditCard.hidden = false;
+        paypal.hidden = true;
+        bitcoin.hidden = true;
     } if (paymentMenu.value == 'paypal') {
-        //console.log('paypal selected!');
-        paypal.style.display = '';
-        creditCard.style.display = 'none';
-        bitcoin.style.display = 'none';
+        console.log('paypal selected!');
+        paypal.hidden = false;
+        creditCard.hidden = true;
+        bitcoin.hidden = true;
     } if (paymentMenu.value == 'bitcoin') {
-        //console.log('bitcoin selected!');
-        bitcoin.style.display = '';
-        paypal.style.display = 'none';
-        creditCard.style.display = 'none';
+        console.log('bitcoin selected!');
+        bitcoin.hidden = false;
+        paypal.hidden = true;
+        creditCard.hidden = true;
     }
 });
 
@@ -393,6 +393,7 @@ cvvInput.addEventListener('input', cvvValidation);
 */
 const form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
+    // empties array so form can go through
     errorMsgs = [];
     e.preventDefault();
     // call above functions to validate each relevant field
